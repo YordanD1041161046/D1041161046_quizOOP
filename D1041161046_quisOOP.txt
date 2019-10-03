@@ -1,0 +1,199 @@
+Nama : Yordan Maranatha Sinulingga
+Nim  : D1041161046
+
+
+1. Modifier
+
+   1. private static final String LOG_TAG =
+            MainActivity.class.getSimpleName(); 
+
+   2. public static final String EXTRA_MESSAGE =
+            "com.example.d1041161046_tugastoastactiv.extra.MESSAGE";
+
+   3.  protected void onCreate(Bundle savedInstanceState) {
+
+2. Method 
+
+    1. onCreate(Bundle savedInstanceState) 
+
+    2. launchSecondActivity()
+
+    3. setContentView()
+
+    4. getIntent()
+
+3. Class
+
+   1.public class SecondActivity extends AppCompatActivity {
+    public static final String EXTRA_REPLY =
+            "com.example.fluxy.d1041161046_tugastoastactiv.extra.REPLY";
+    private EditText mReply;
+    private int mCount = 46;
+    private TextView mShowCount;
+
+   2.public class MainActivity extends AppCompatActivity {
+     private static final String LOG_TAG =
+            MainActivity.class.getSimpleName();
+     public static final String EXTRA_MESSAGE =
+            "com.example.d1041161046_tugastoastactiv.extra.MESSAGE";
+     private EditText mMessageEditText;
+     public static final int TEXT_REQUEST = 1;
+     private TextView mReplyHeadTextView;
+     private TextView mReplyTextView;
+ 
+
+4. Function
+
+   1. public void countUp(View view) {
+        mCount++;
+        if (mShowCount != null)
+            mShowCount.setText(Integer.toString(mCount));
+      }
+   2. public void countDown(View view) {
+        mCount--;
+        if (mShowCount != null)
+            mShowCount.setText(Integer.toString(mCount));
+      }
+   3.  public void showToast(View view) {
+        Toast toast = Toast.makeText(this, R.string.toast_message,
+                Toast.LENGTH_SHORT);
+        toast.show();
+      }
+       
+ 
+5. Constructor
+
+   1.public void launchSecondActivity(View view) {
+        Log.d(LOG_TAG, "Button clicked!");
+        Intent intent = new Intent(this, SecondActivity.class);
+        String message = mMessageEditText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivityForResult(intent, TEXT_REQUEST);
+    }
+   
+   2.public void showToast(View view) {
+        Toast toast = Toast.makeText(this, R.string.toast_message,
+                Toast.LENGTH_SHORT);
+        toast.show();
+      }
+       
+
+
+6. Polimorfisme
+   1.public void returnReply(View view) {
+        // Get the reply message from the edit text.
+        String reply = mReply.getText().toString();
+
+        // Create a new intent for the reply, add the reply message to it
+        // as an extra, set the intent result, and close the activity.
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(EXTRA_REPLY, reply);
+        setResult(RESULT_OK, replyIntent);
+        Log.d(LOG_TAG, "End SecondActivity");
+        finish();
+   2. public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mReplyHeadTextView.getVisibility() == View.VISIBLE) {
+            outState.putBoolean("reply_visible", true);
+            outState.putString("reply_text", mReplyTextView.getText().toString());
+        }
+    }
+   3. public void returnReply(View view) {
+        String reply = mReply.getText().toString();
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(EXTRA_REPLY, reply);
+        setResult(RESULT_OK,replyIntent);
+        finish();
+    }
+
+    public void countUp(View view) {
+        mCount++;
+        if (mShowCount != null)
+            mShowCount.setText(Integer.toString(mCount));
+    }
+
+    public void countDown(View view) {
+        mCount--;
+        if (mShowCount != null)
+            mShowCount.setText(Integer.toString(mCount));
+    }
+}
+
+ 
+7. Inheritance 
+   1.public class SecondActivity extends AppCompatActivity {
+    public static final String EXTRA_REPLY =
+            "com.example.fluxy.d1041161046_tugastoastactiv.extra.REPLY";
+    private EditText mReply;
+    private int mCount = 46;
+    private TextView mShowCount;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        TextView textView = findViewById(R.id.text_message);
+        message= "Hallo "+message;
+        textView.setText(message);
+        mShowCount = (TextView) findViewById(R.id.textView);
+    }
+
+    public void returnReply(View view) {
+        String reply = mReply.getText().toString();
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(EXTRA_REPLY, reply);
+        setResult(RESULT_OK,replyIntent);
+        finish();
+    }
+
+    public void countUp(View view) {
+        mCount++;
+        if (mShowCount != null)
+            mShowCount.setText(Integer.toString(mCount));
+    }
+
+    public void countDown(View view) {
+        mCount--;
+        if (mShowCount != null)
+            mShowCount.setText(Integer.toString(mCount));
+    }
+}
+
+    }
+   2.public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG =
+            MainActivity.class.getSimpleName();
+    public static final String EXTRA_MESSAGE =
+            "com.example.d1041161046_tugastoastactiv.extra.MESSAGE";
+    private EditText mMessageEditText;
+    public static final int TEXT_REQUEST = 1;
+    private TextView mReplyHeadTextView;
+    private TextView mReplyTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mMessageEditText = findViewById(R.id.editText_main);
+    }
+    public void launchSecondActivity(View view) {
+        Log.d(LOG_TAG, "Button clicked!");
+        Intent intent = new Intent(this, SecondActivity.class);
+        String message = mMessageEditText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivityForResult(intent, TEXT_REQUEST);
+    }
+   3.public class MainActivity extends AppCompatActivity {
+
+    private int mCount = 0;
+    private TextView mShowCount;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mShowCount = (TextView) findViewById(R.id.show_count);
+    }
